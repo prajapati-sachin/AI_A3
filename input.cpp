@@ -111,8 +111,6 @@ int main(int argc, char const *argv[]){
 	string ouputFile = argv[1];
 	ouputFile += ".satinput"; 
 
-	// ios_base::sync_with_stdio(0);
-	// fin.tie(0); fout.tie(0);
 	fin = ifstream(inputFile);
 	fout = ofstream(ouputFile);
 
@@ -122,12 +120,8 @@ int main(int argc, char const *argv[]){
 	curr_var_no += n*k;
 
 	vertex_fn();
-	// curr_var_no += n*k;
-	// cout << curr_var_no << '\n';
 	subgraph_fn();
-	// cout << curr_var_no << '\n';
 	edge_fn();
-	// cout << curr_var_no << '\n';
 
 	fin.close();
 	fout.close();
