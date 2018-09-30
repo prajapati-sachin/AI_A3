@@ -33,7 +33,6 @@ void vertex_fn(){
 	for(int i=1;i<=n;i++){
 		for(int j=1;j<=k;j++){
 			int no = (i-1)*k + j;
-			curr_var_no++;
 			fout << no << ' ';
 		}
 		fout<<"0\n";
@@ -102,6 +101,7 @@ void edge_fn(){
 }
 
 int main(int argc, char const *argv[]){
+
 	if(argc < 2){
 		cout<<"Input File Error\n";
 		return 0;
@@ -111,13 +111,18 @@ int main(int argc, char const *argv[]){
 	string ouputFile = argv[1];
 	ouputFile += ".satinput"; 
 
+	// ios_base::sync_with_stdio(0);
+	// fin.tie(0); fout.tie(0);
 	fin = ifstream(inputFile);
 	fout = ofstream(ouputFile);
 
 	take_input();
 	init();
 
+	curr_var_no += n*k;
+
 	vertex_fn();
+	// curr_var_no += n*k;
 	// cout << curr_var_no << '\n';
 	subgraph_fn();
 	// cout << curr_var_no << '\n';
