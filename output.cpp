@@ -54,8 +54,10 @@ int main(int argc, char const *argv[]){
 
 	for(int i=1;i<=k;i++){
 		fout << "#" << i << ' ' << subgraph[i].size() << '\n';
-		for(auto z : subgraph[i])
-			fout << z << ' ';
+		for(int j=0; j < subgraph[i].size(); j++){
+			if(j == (int)subgraph[i].size()-1) fout<<subgraph[i][j];
+			else fout<<subgraph[i][j]<<' ';
+		}
 		fout << '\n';
 	}
 

@@ -24,7 +24,7 @@ void take_input(){
 // Total number of variables = n*k + m*k + n*k*k
 // Total number of clauses = n + (nC2-m)*k + (m+3mk) + (k*k + 3*n*k*k)
 void init(){
-	int no_var = n*k + m*k + n*k*k;
+	int no_var = n*k + m*k + n*k*(k-1);
 	int no_clauses = n + (n*(n-1)*k)/2 - m*k + m + 3*m*k + k*(k-1) + 3*n*k*(k-1);
 	fout << "p cnf " << no_var << ' ' << no_clauses <<'\n';
 }
@@ -56,9 +56,9 @@ void subgraph_fn(){
 				int pi = vertex_var_no(p,i);
 				int pj = vertex_var_no(p,j);
 
-				fout << '-' << curr_var_no << ' ' << pi << "0\n";
-				fout << '-' << curr_var_no << ' ' << '-' << pj << "0\n";
-				fout << curr_var_no << ' ' << '-' << pi << ' ' << pj << "0\n";
+				fout << '-' << curr_var_no << ' ' << pi << " 0\n";
+				fout << '-' << curr_var_no << ' ' << '-' << pj << " 0\n";
+				fout << curr_var_no << ' ' << '-' << pi << ' ' << pj << " 0\n";
 			}
 			fout << clause << "0\n";
 		}
@@ -75,9 +75,9 @@ void add_edge_clause(int i, int j){
 		int il = vertex_var_no(i,l);
 		int jl = vertex_var_no(j,l);
 		
-		fout << '-' << curr_var_no << ' ' << il << "0\n";
-		fout << '-' << curr_var_no << ' ' << jl << "0\n";
-		fout <<        curr_var_no << " -" << il << " -" << jl << "0\n";
+		fout << '-' << curr_var_no << ' ' << il << " 0\n";
+		fout << '-' << curr_var_no << ' ' << jl << " 0\n";
+		fout <<        curr_var_no << " -" << il << " -" << jl << " 0\n";
 
 	}
 	fout << clause << "0\n";
@@ -87,7 +87,7 @@ void add_no_edge_clause(int i, int j){
 	for(int l=1;l<=k;l++){
 		int il = vertex_var_no(i,l);
 		int jl = vertex_var_no(j,l);
-		fout << '-' << il << ' ' << '-' << jl <<"0\n";
+		fout << '-' << il << ' ' << '-' << jl <<" 0\n";
 	}
 }
 
@@ -113,18 +113,16 @@ int main(int argc, char const *argv[]){
 
 	fin = ifstream(inputFile);
 	fout = ofstream(ouputFile);
-	cout << "here\n";
 
 	take_input();
-	cout << n << ' ' << m << ' ' << k << '\n';
 	init();
 
 	vertex_fn();
-	cout << curr_var_no << '\n';
+	// cout << curr_var_no << '\n';
 	subgraph_fn();
-	cout << curr_var_no << '\n';
+	// cout << curr_var_no << '\n';
 	edge_fn();
-	cout << curr_var_no << '\n';
+	// cout << curr_var_no << '\n';
 
 	fin.close();
 	fout.close();
