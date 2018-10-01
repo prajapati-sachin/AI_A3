@@ -9,4 +9,6 @@ python checker.py $1.graph $1.subgraphs
 rm $1.graph
 rm $1.subgraphs
 cd ..
-
+rm $1.subgraphs
+rm $1.satinput
+rm $1.satoutput
