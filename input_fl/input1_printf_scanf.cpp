@@ -1,6 +1,4 @@
-#include<iostream>
-#include<vector>
-#include<set>
+#include<bits/stdc++.h>
 #include<fstream>
 using namespace std;
 
@@ -13,7 +11,8 @@ ifstream fin;
 ofstream fout;
 
 void take_input(){
-	fin >> n >> m >> k;
+	scanf("%d%d%d",&n,&m,&k);
+	// fin >> n >> m >> k;
 
 	vector<bool> row(n+1,0);
 	vector<int> empty;
@@ -21,7 +20,8 @@ void take_input(){
 
 	for(int i=0;i<m;i++){
 		int u,v;
-		fin >> u >> v;
+		// fin >> u >> v;
+		scanf("%d%d",&u,&v);
 		adj[u][v] = 1;
 		adj[v][u] = 1;
 		adj_list[u].push_back(v);
@@ -33,16 +33,19 @@ void take_input(){
 void init(){
 	int no_var = n*k + m*k + n*k*(k-1);
 	int no_clauses = n + (n*(n-1)*k)/2 - m*k + m + 3*m*k + k*(k-1) + 3*n*k*(k-1);
-	fout << "p cnf " << no_var << ' ' << no_clauses <<'\n';
+	printf("p cnf %d %d\n",no_var,no_clauses);
+	// fout << "p cnf " << no_var << ' ' << no_clauses <<'\n';
 }
 
 void vertex_fn(){
 	for(int i=1;i<=n;i++){
 		for(int j=1;j<=k;j++){
 			int no = (i-1)*k + j;
-			fout << no << ' ';
+			printf("%d ",no);
+			// fout << no << ' ';
 		}
-		fout<<"0\n";
+		printf("0\n");
+		// fout<<"0\n";
 	}
 }
 
@@ -68,8 +71,10 @@ void subgraph_fn(){
 				clause2 += to_string(++curr_var_no_tmp);
 				clause2 += ' ';
 			}
-			fout << clause1 << "0\n";
-			fout << clause2 << "0\n";
+			printf("%s0\n",clause1.c_str());
+			printf("%s0\n",clause2.c_str());
+			// fout << clause1 << "0\n";
+			// fout << clause2 << "0\n";
 
 			for(int p=1;p<=n;p++){
 				
@@ -80,20 +85,28 @@ void subgraph_fn(){
 				int pi = vertex_var_no(p,i);
 				int pj = vertex_var_no(p,j);
 
-				fout << -curr_var_no << ' ' <<  pi << " 0\n";
-				fout << -curr_var_no << ' ' << -pj << " 0\n";
+				// fout << -curr_var_no << ' ' <<  pi << " 0\n";
+				// fout << -curr_var_no << ' ' << -pj << " 0\n";
+				// if(random_proc())
+				// fout <<  curr_var_no << ' ' << -pi << ' ' << pj << " 0\n";
+				printf("-%d %d 0\n",curr_var_no,pi);
+				printf("-%d -%d 0\n",curr_var_no,pj);
 				if(random_proc())
-				fout <<  curr_var_no << ' ' << -pi << ' ' << pj << " 0\n";
+				printf("%d -%d %d 0\n",curr_var_no,pi,pj);
 
 				++curr_var_no;
 
 				pi = vertex_var_no(p,j);
 				pj = vertex_var_no(p,i);
 
-				fout << -curr_var_no << ' ' <<  pi << " 0\n";
-				fout << -curr_var_no << ' ' << -pj << " 0\n";
+				// fout << -curr_var_no << ' ' <<  pi << " 0\n";
+				// fout << -curr_var_no << ' ' << -pj << " 0\n";
+				// if(random_proc())
+				// fout <<  curr_var_no << ' ' << -pi << ' ' << pj << " 0\n";
+				printf("-%d %d 0\n",curr_var_no,pi);
+				printf("-%d -%d 0\n",curr_var_no,pj);
 				if(random_proc())
-				fout <<  curr_var_no << ' ' << -pi << ' ' << pj << " 0\n";
+				printf("%d -%d %d 0\n",curr_var_no,pi,pj);
 			}
 		}
 	}
@@ -107,18 +120,24 @@ void add_edge_clause(int i, int j){
 		clause += to_string(++curr_var_no_tmp);
 		clause += ' ';
 	}
-	fout << clause << "0\n";
+	// fout << clause << "0\n";
+	printf("%s0\n",clause.c_str());
+
 	for(int l=1;l<=k;l++){
 		++curr_var_no;
 
 		int il = vertex_var_no(i,l);
 		int jl = vertex_var_no(j,l);
 		
-		fout << -curr_var_no << ' ' << il << " 0\n";
-		fout << -curr_var_no << ' ' << jl << " 0\n";
-		if(random_proc())
-		fout << curr_var_no << ' ' << -il << ' ' << -jl << " 0\n";
+		// fout << -curr_var_no << ' ' << il << " 0\n";
+		// fout << -curr_var_no << ' ' << jl << " 0\n";
+		// if(random_proc())
+		// fout << curr_var_no << ' ' << -il << ' ' << -jl << " 0\n";
 
+		printf("-%d %d 0\n",curr_var_no,il);
+		printf("-%d %d 0\n",curr_var_no,jl);
+		if(random_proc())
+		printf("%d -%d -%d 0\n",curr_var_no,il,jl);
 	}
 }
 
@@ -127,7 +146,8 @@ void add_no_edge_clause(int i, int j){
 	for(int l=1;l<=k;l++){
 		int il = vertex_var_no(i,l);
 		int jl = vertex_var_no(j,l);
-		fout << -il << ' ' << -jl <<" 0\n";
+		// fout << -il << ' ' << -jl <<" 0\n";
+		printf("-%d -%d 0\n",il,jl);
 	}
 }
 
@@ -167,7 +187,8 @@ void lets_do_it(){
 		subgraph_index++;
 		vis[curr_vertex] = 1;
 
-		fout << vertex_var_no(curr_vertex, subgraph_index) << " 0\n";
+		// fout << vertex_var_no(curr_vertex, subgraph_index) << " 0\n";
+		printf("%d 0\n",vertex_var_no(curr_vertex, subgraph_index));
 		total++;
 
 		for(int i=1;i<=n;i++) vis_local[i] = 0;
@@ -179,7 +200,8 @@ void lets_do_it(){
 
 		for(int i=1;i<=n;i++){
 			if(vis_local[i]) continue;
-			fout << -vertex_var_no(i, subgraph_index) << " 0\n";
+			// fout << -vertex_var_no(i, subgraph_index) << " 0\n";
+			printf("-%d 0\n",vertex_var_no(i, subgraph_index));
 			total++;
 		}
 	}
@@ -191,13 +213,16 @@ int main(int argc, char const *argv[]){
 		return 0;
 	}
 	srand(time(NULL));
-	string inputFile = argv[1];
-	inputFile += ".graph";
-	string ouputFile = argv[1];
-	ouputFile += ".satinput"; 
+	// string inputFile = argv[1];
+	// inputFile += ".graph";
+	// string ouputFile = argv[1];
+	// ouputFile += ".satinput"; 
 
-	fin = ifstream(inputFile);
-	fout = ofstream(ouputFile);
+	freopen(argv[1],"r",stdin);
+	freopen(argv[2],"w",stdout);
+
+	// fin = ifstream(inputFile);
+	// fout = ofstream(ouputFile);
 
 	take_input();
 	init();
@@ -208,8 +233,5 @@ int main(int argc, char const *argv[]){
 	vertex_fn();
 	subgraph_fn();
 	edge_fn();
-
-	fin.close();
-	fout.close();
 	return 0;
 }

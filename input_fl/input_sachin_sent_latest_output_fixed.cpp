@@ -1,6 +1,4 @@
-#include<iostream>
-#include<vector>
-#include<set>
+#include<bits/stdc++.h>
 #include<fstream>
 using namespace std;
 
@@ -208,6 +206,8 @@ int main(int argc, char const *argv[]){
 	vertex_fn();
 	subgraph_fn();
 	edge_fn();
+
+	cout << total << endl;
 
 	fin.close();
 	fout.close();
